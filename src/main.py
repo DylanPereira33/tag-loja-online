@@ -20,11 +20,12 @@ def menu():
     while True:
         print("\n=== Loja Online ===")
         print("1. Listar produtos")
-        print("2. Adicionar produto ao carrinho")
-        print("3. Remover produto do carrinho")
-        print("4. Ver carrinho (itens e total)")
-        print("5. Finalizar compra (Pedido)")
-        print("6. Sair")
+        print("2. Listar produtos por categoria")
+        print("3. Adicionar produto ao carrinho")
+        print("4. Remover produto do carrinho")
+        print("5. Ver carrinho (itens e total)")
+        print("6. Finalizar compra (Pedido)")
+        print("7. Sair")
 
         opcao = input("Escolha uma opção: ")
 
@@ -33,6 +34,16 @@ def menu():
                 listar_produtos()
 
             case "2":
+                categoria = input("Categoria: ")
+                filtrados = filtrar_por_categoria(produtos, categoria)
+
+                if not filtrados:
+                    print("Nenhum produto encontrado.")
+                else:
+                    for p in filtrados:
+                        print(p)
+                        
+            case "3":
                 while True:   # LOOP INTERNO PARA COMPRAS SEQUENCIAIS
                     listar_produtos()
                     codigo = input("Código: ")
@@ -55,7 +66,8 @@ def menu():
                     else:
                         print("Opção inválida.")
                         break
-            case "3":
+                        
+            case "4":
                 mostrar_carrinho()
                 if len(carrinho.itens) == 0:
                     continue
@@ -66,7 +78,7 @@ def menu():
                     else:
                         print("Código não encontrado no carrinho.")
 
-            case "4":
+            case "5":
                 print("\n--- Seu Carrinho ---")
 
                 if len(carrinho.itens) == 0:
@@ -79,7 +91,7 @@ def menu():
                     total = calcular_total_carrinho(carrinho)
                     print(f"Total: R${total:.2f}")
 
-            case "5":
+            case "6":
                 total = calcular_total_carrinho(carrinho)
                 print(f"Valor final: R${total:.2f}")
                 print("Escolha forma de pagamento:")
@@ -113,7 +125,7 @@ def menu():
                 carrinho.limpar()
 
 
-            case "6":
+            case "7":
                 print("Saindo...")
                 break
             case _:
