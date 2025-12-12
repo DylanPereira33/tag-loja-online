@@ -1,6 +1,6 @@
 from produtos import listar_produtos, escolher_produto
 from modelos import Carrinho, Cliente, PagamentoPix, PagamentoCartao, PagamentoBoleto, Pedido
-from funcoes_funcionais import calcular_total_carrinho
+from funcoes_funcionais import calcular_total_carrinho, aplicar_desconto
 
 carrinho = Carrinho()
 cliente = Cliente("Joao das Coves", "joaodascoves@email.com")  # cliente fixo para simplificar
@@ -66,6 +66,9 @@ def menu():
 
             case "5":
                 total = calcular_total_carrinho(carrinho)
+                print("Aplicando desconto de 10%.")
+                desconto10 = aplicar_desconto(lambda v: v * 0.9)   # Uso real da função funcional aplicar_desconto
+                total = desconto10(total)
                 print(f"Valor final: R${total:.2f}")
                 print("Escolha forma de pagamento:")
                 print("1. Pix\n2. Cartão\n3. Boleto")
