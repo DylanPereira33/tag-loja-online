@@ -1,6 +1,7 @@
-from produtos import listar_produtos, escolher_produto
+from produtos import produtos, listar_produtos, escolher_produto
 from modelos import Carrinho, Cliente, PagamentoPix, PagamentoCartao, PagamentoBoleto, Pedido
-from funcoes_funcionais import calcular_total_carrinho, aplicar_desconto
+from funcoes_funcionais import calcular_total_carrinho, aplicar_desconto, filtrar_por_categoria
+
 
 carrinho = Carrinho()
 cliente = Cliente("Joao das Coves", "joaodascoves@email.com")  # cliente fixo para simplificar
