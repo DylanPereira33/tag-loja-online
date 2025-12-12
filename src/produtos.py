@@ -1,25 +1,6 @@
 
 # Paradigma Estruturado: funções e controle clássico
 from modelos import ProdutoFisico, ProdutoDigital
-
-
-class Produto:
-    def __init__(self, codigo, nome, preco, categoria, descricao, estoque):
-        self._codigo = codigo
-        self._nome = nome
-        self._preco = preco
-        self._categoria = categoria
-        self._descricao = descricao
-        self._estoque = estoque
-
-    def get_codigo(self): return self._codigo
-    def get_nome(self): return self._nome
-    def get_preco(self): return self._preco
-    def get_categoria(self): return self._categoria
-    def get_descricao(self): return self._descricao
-
-    def __str__(self):
-        return f"[{self._codigo}] {self._nome} - R${self._preco:.2f} ({self._categoria}) | Estoque: {self._estoque}"
         
 produtos = [
     ProdutoFisico("P001", "Livro Python", 50, "Livros", "Aprenda Python", 10),
