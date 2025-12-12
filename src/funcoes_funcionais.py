@@ -2,7 +2,7 @@
 from functools import reduce
 
 def filtrar_por_categoria(produtos, categoria):
-    return list(filter(lambda p: p._categoria == categoria, produtos))
+    return list(filter(lambda p: p.get_categoria == categoria, produtos))
 
 def nomes_produtos(produtos):
     return list(map(lambda p: p.get_nome(), produtos))
