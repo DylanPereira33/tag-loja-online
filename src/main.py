@@ -3,7 +3,7 @@ from modelos import Carrinho, Cliente, PagamentoPix, PagamentoCartao, PagamentoB
 from funcoes_funcionais import calcular_total_carrinho
 
 carrinho = Carrinho()
-cliente = Cliente("Dylan", "dylan@email.com")  # cliente fixo para simplificar
+cliente = Cliente("Joao das Coves", "joaodascoves@email.com")  # cliente fixo para simplificar
 
 def menu():
     while True:
@@ -17,47 +17,50 @@ def menu():
 
         opcao = input("Escolha uma opção: ")
 
-        if opcao == "1":
-            listar_produtos()
-        elif opcao == "2":
-            listar_produtos()
-            codigo = input("Digite o código do produto: ")
-            produto = escolher_produto(codigo)
-            if produto:
-                carrinho.adicionar(produto, 1)
-                print("Produto adicionado!")
-        elif opcao == "3":
-            nome = input("Digite o nome do produto para remover: ")
-            carrinho.remover(nome)
-            print("Produto removido!")
-        elif opcao == "4":
-            print("\n--- Seu Carrinho ---")
-            for item in carrinho.itens:
-                print(f"{item.qtd}x {item.produto.get_nome()} - Subtotal: R${item.subtotal():.2f}")
-            total = calcular_total_carrinho(carrinho)
-            print(f"Total da compra: R${total:.2f}")
-        elif opcao == "5":
-            total = calcular_total_carrinho(carrinho)
-            print(f"Valor final: R${total:.2f}")
-            print("Escolha forma de pagamento:")
-            print("1. Pix\n2. Cartão\n3. Boleto")
-            forma = int(input("Opção: "))
+        match opcao:
+            case "1":
+                listar_produtos()
+            case "2":
+                listar_produtos()
+                codigo = input("Digite o código do produto: ")
+                produto = escolher_produto(codigo)
+                if produto:
+                    carrinho.adicionar(produto, 1)
+                    print("Produto adicionado!")
+            case "3":
+                nome = input("Digite o nome do produto para remover: ")
+                carrinho.remover(nome)
+                print("Produto removido!")
+            case "4":
+                print("\n--- Seu Carrinho ---")
+                for item in carrinho.itens:
+                    print(f"{item.qtd}x {item.produto.get_nome()} - Subtotal: R${item.subtotal():.2f}")
+                total = calcular_total_carrinho(carrinho)
+                print(f"Total da compra: R${total:.2f}")
+            case "5":
+                total = calcular_total_carrinho(carrinho)
+                print(f"Valor final: R${total:.2f}")
+                print("Escolha forma de pagamento:")
+                print("1. Pix\n2. Cartão\n3. Boleto")
+                forma = int(input("Opção: "))
 
-            match forma:
-                case 1: pagamento = PagamentoPix()
-                case 2: pagamento = PagamentoCartao()
-                case 3: pagamento = PagamentoBoleto()
-                case _: 
+                if forma == 1:
+                    pagamento = PagamentoPix()
+                elif forma == 2:
+                    pagamento = PagamentoCartao()
+                elif forma == 3:
+                    pagamento = PagamentoBoleto()
+                else:
                     print("Forma inválida!")
                     continue
 
-            pedido = Pedido(cliente, carrinho, pagamento)
-            pedido.confirmar_pedido()
-            pedido.mostrar_resumo()
-        elif opcao == "6":
-            print("Saindo...")
-            break
-        else:
-            print("Opção inválida!")
+                pedido = Pedido(cliente, carrinho, pagamento)
+                pedido.confirmar_pedido()
+                pedido.mostrar_resumo()
+            case "6":
+                print("Saindo...")
+                break
+            case _:
+                print("Opção inválida!")
 
 menu()
