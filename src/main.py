@@ -20,23 +20,50 @@ def menu():
         match opcao:
             case "1":
                 listar_produtos()
+
             case "2":
-                listar_produtos()
-                codigo = input("Digite o código do produto: ")
-                produto = escolher_produto(codigo)
-                if produto:
-                    carrinho.adicionar(produto, 1)
-                    print("Produto adicionado!")
+                while True:   # LOOP INTERNO PARA COMPRAS SEQUENCIAIS
+                    listar_produtos()
+                    codigo = input("Código: ")
+                    produto = escolher_produto(codigo)
+
+                    if produto:
+                        carrinho.adicionar(produto, 1)
+
+                    print("\n1. Continuar comprando")
+                    print("2. Voltar ao menu")
+
+                    escolha = input("Opção: ")
+
+                    if escolha == "1":
+                        continue   # volta ao início do loop interno
+
+                    elif escolha == "2":
+                        break      # retorna ao menu principal
+
+                    else:
+                        print("Opção inválida.")
             case "3":
-                nome = input("Digite o nome do produto para remover: ")
-                carrinho.remover(nome)
-                print("Produto removido!")
+                codigo = input("Digite o código do produto para remover: ")
+                if carrinho.remover(codigo):
+                    print("Produto removido!")
+                else:
+                    print("Código não encontrado no carrinho.")
+
+
             case "4":
                 print("\n--- Seu Carrinho ---")
-                for item in carrinho.itens:
-                    print(f"{item.qtd}x {item.produto.get_nome()} - Subtotal: R${item.subtotal():.2f}")
-                total = calcular_total_carrinho(carrinho)
-                print(f"Total da compra: R${total:.2f}")
+
+                if len(carrinho.itens) == 0:
+                    print("Carrinho vazio.")
+                else:
+                    for item in carrinho.itens:
+                        print(f"{item.qtd}x {item.produto.get_nome()} - R${item.subtotal():.2f}")
+
+                    # PARADIGMA FUNCIONAL: reduce para somar valores
+                    total = calcular_total_carrinho(carrinho)
+                    print(f"Total: R${total:.2f}")
+
             case "5":
                 total = calcular_total_carrinho(carrinho)
                 print(f"Valor final: R${total:.2f}")
@@ -57,6 +84,10 @@ def menu():
                 pedido = Pedido(cliente, carrinho, pagamento)
                 pedido.confirmar_pedido()
                 pedido.mostrar_resumo()
+
+                # Limpa carrinho após finalizar
+                carrinho.limpar()
+
             case "6":
                 print("Saindo...")
                 break
